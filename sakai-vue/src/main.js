@@ -101,12 +101,16 @@ import TriStateCheckbox from 'primevue/tristatecheckbox';
 import VirtualScroller from 'primevue/virtualscroller';
 
 import BlockViewer from '@/components/BlockViewer.vue';
+import axios from 'axios';
 
 import '@/assets/styles.scss';
 
 import store from './store/index';
 
-
+if (localStorage.getItem('access-token'))
+{
+    axios.defaults.headers.common['Authorization'] ='Bearer '+ localStorage.getItem('access-token');
+}
 
 const app = createApp(App);
 

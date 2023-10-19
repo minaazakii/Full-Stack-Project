@@ -1,6 +1,7 @@
 import { createStore } from 'vuex';
 import category from './modules/category';
 import product from './modules/product';
+import auth from './modules/auth'
 
 const store = createStore({
     state() {
@@ -10,7 +11,8 @@ const store = createStore({
     },
     modules: {
         category,
-        product
+        product,
+        auth
     },
     actions:{
         startLoading({commit}){
