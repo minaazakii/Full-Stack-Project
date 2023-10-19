@@ -11,13 +11,11 @@ class RegisterController extends Controller
 {
     public function store(RegisterRequest $request)
     {
-        $user = User::create($request->validated());
+        User::create($request->validated());
         return response()->json(
             [
-                'user' => $user,
-                'token' => $user->createToken($user->email)->plainTextToken
+                'message' => 'Registered Successfully',
             ]
         );
     }
-
 }

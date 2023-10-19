@@ -23,4 +23,5 @@ class LoginController extends Controller
                 'token'=> $user->createToken($user->email)->plainTextToken
             ]);
     }
+
 }

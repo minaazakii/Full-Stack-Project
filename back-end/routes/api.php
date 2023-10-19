@@ -21,14 +21,12 @@ use Illuminate\Support\Facades\Route;
 Route::post('/auth/register', [RegisterController::class, 'store']);
 Route::post('/auth/login', [LoginController::class, 'login']);
 
-Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
-    return $request->user();
+Route::group(['middleware' => 'checkToken'], function () {
+    //Categories
+    Route::post('/categories/multi/delete', [CategoryController::class, 'destroyMulti']);
+    Route::apiResource('categories', CategoryController::class);
+
+    //Products
+    Route::post('/products/multi/delete', [ProductController::class, 'destroyMulti']);
+    Route::apiResource('products', ProductController::class);
 });
-
-//Categories
-Route::post('/categories/multi/delete', [CategoryController::class, 'destroyMulti']);
-Route::apiResource('categories', CategoryController::class);
-
-//Products
-Route::post('/products/multi/delete', [ProductController::class, 'destroyMulti']);
-Route::apiResource('products', ProductController::class);
