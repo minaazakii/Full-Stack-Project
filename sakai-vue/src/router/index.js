@@ -190,11 +190,6 @@ const router = createRouter({
             ]
         },
         {
-            path: '/pages/notfound',
-            name: 'notfound',
-            component: () => import('@/views/pages/NotFound.vue')
-        },
-        {
             path: '/auth/access',
             name: 'accessDenied',
             component: () => import('@/views/pages/auth/Access.vue')
@@ -203,7 +198,14 @@ const router = createRouter({
             path: '/auth/error',
             name: 'error',
             component: () => import('@/views/pages/auth/Error.vue')
-        }
+        },
+        {
+            path: '/:pathMatch(.*)*',
+            name: 'notfound',
+            component: () => import('@/views/pages/NotFound.vue')
+        },
+        
+
     ]
 });
 
@@ -218,7 +220,6 @@ router.beforeEach((to, from, next) => {
     
     //Prevent User From Returning to Login Or Register Logged In
     else if (!auth && authUserMeta) {
-        console.log('sss');
         next({ name: 'dashboard' });
     } else {
         next();
