@@ -2,12 +2,15 @@
 import { ref, computed, onMounted, onBeforeUnmount } from 'vue';
 import { useLayout } from '@/layout/composables/layout';
 import { useRouter } from 'vue-router';
+import { useStore } from 'vuex';
 
 const { layoutConfig, onMenuToggle } = useLayout();
 
 const outsideClickListener = ref(null);
 const topbarMenuActive = ref(false);
 const router = useRouter();
+const store = useStore();
+
 
 onMounted(() => {
     bindOutsideClickListener();
@@ -33,6 +36,11 @@ const topbarMenuClasses = computed(() => {
         'layout-topbar-menu-mobile-active': topbarMenuActive.value
     };
 });
+
+const logout = ()=>{
+    store.dispatch('auth/logout')
+    router.push({name:'login'})
+}
 
 const bindOutsideClickListener = () => {
     if (!outsideClickListener.value) {
@@ -80,13 +88,20 @@ const isOutsideClicked = (event) => {
                 <i class="pi pi-calendar"></i>
                 <span>Calendar</span>
             </button>
+
             <button @click="onTopBarMenuButton()" class="p-link layout-topbar-button">
                 <i class="pi pi-user"></i>
                 <span>Profile</span>
             </button>
+
             <button @click="onSettingsClick()" class="p-link layout-topbar-button">
                 <i class="pi pi-cog"></i>
                 <span>Settings</span>
+            </button>
+
+            <button @click="logout()" class="p-link layout-topbar-button">
+                <i class="pi pi-sign-out"></i>
+                <span>Logout</span>
             </button>
         </div>
     </div>

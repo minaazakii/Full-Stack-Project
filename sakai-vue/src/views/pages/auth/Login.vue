@@ -54,9 +54,11 @@ const logoUrl = computed(() => {
                     <div>
                         <label for="email1" class="block text-900 text-xl font-medium mb-2">Email</label>
                         <InputText :class="{ 'p-invalid': submitted && !user.email }" id="email1" type="email" placeholder="Email address" class="w-full md:w-30rem mb-5" style="padding: 1rem" v-model.trim="user.email" />
+                        <p style="margin-top: -20px;" class="p-error" v-if="submitted && !user.email" > Email is Required</p>
 
                         <label for="email1" class="block text-900 text-xl font-medium mb-2">Password</label>
                         <InputText :class="{ ' p-invalid': submitted && !user.password }" id="password" type="password" placeholder="Password" class="w-full md:w-30rem mb-5" style="padding: 1rem" v-model.trim="user.password" />
+                        <p style="margin-top: -20px;" class="p-error" v-if="submitted && !user.password" > Password is Required</p>
 
                         <div class="flex align-items-center justify-content-between mb-5 gap-5">
                             <div class="flex align-items-center">
