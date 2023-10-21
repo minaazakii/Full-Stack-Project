@@ -40,6 +40,36 @@ const router = createRouter({
                     component: () => import('@/views/Dashboard.vue')
                 },
                 {
+                    path: 'categories',
+                    children: [
+                        {
+                            path: '',
+                            name: 'categories',
+                            component: () => import('@/views/pages/category/Index.vue')
+                        }
+                    ]
+                },
+                {
+                    path: 'products',
+                    children: [
+                        {
+                            path: '',
+                            name: 'products',
+                            component: () => import('@/views/pages/product/Index.vue')
+                        }
+                    ]
+                },
+                {
+                    path: 'orders',
+                    children: [
+                        {
+                            path: '',
+                            name: 'orders',
+                            component: () => import('@/views/pages/order/Index.vue')
+                        }
+                    ]
+                },
+                {
                     path: '/uikit/formlayout',
                     name: 'formlayout',
                     component: () => import('@/views/uikit/FormLayout.vue')
@@ -84,7 +114,6 @@ const router = createRouter({
                     name: 'panel',
                     component: () => import('@/views/uikit/Panels.vue')
                 },
-
                 {
                     path: '/uikit/overlay',
                     name: 'overlay',
@@ -94,26 +123,6 @@ const router = createRouter({
                     path: '/uikit/media',
                     name: 'media',
                     component: () => import('@/views/uikit/Media.vue')
-                },
-                {
-                    path: 'categories',
-                    children: [
-                        {
-                            path: '',
-                            name: 'categories',
-                            component: () => import('@/views/pages/category/Index.vue')
-                        }
-                    ]
-                },
-                {
-                    path: 'products',
-                    children: [
-                        {
-                            path: '',
-                            name: 'products',
-                            component: () => import('@/views/pages/product/Index.vue')
-                        }
-                    ]
                 },
                 {
                     path: '/uikit/menu',
@@ -215,7 +224,7 @@ router.beforeEach((to, from, next) => {
     if (auth && !authUserMeta) {
         next({ name: 'login' });
     }
-    
+
     //Prevent User From Returning to Login Or Register Logged In
     else if (!auth && authUserMeta) {
         console.log('sss');

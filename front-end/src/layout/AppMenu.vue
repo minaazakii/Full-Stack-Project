@@ -7,7 +7,7 @@ import router from '../router/index';
 const model = ref([
     {
         label: 'Home',
-        items: [{ label: 'Dashboard', icon: 'pi pi-fw pi-home', to: router.resolve({name:'dashboard'}) }]
+        items: [{ label: 'Dashboard', icon: 'pi pi-fw pi-home', to: router.resolve({ name: 'dashboard' }) }]
     },
     // {
     //     label: 'UI Components',
@@ -60,9 +60,14 @@ const model = ref([
                 to: router.resolve({ name: 'categories' })
             },
             {
-                label:'Products',
+                label: 'Products',
                 icon: 'pi pi-fw pi-shopping-bag',
-                to:router.resolve({name:'products'})
+                to: router.resolve({ name: 'products' })
+            },
+            {
+                label: 'Orders',
+                icon: 'pi pi-fw pi-shopping-bag',
+                to: router.resolve({ name: 'orders' })
             },
             {
                 label: 'Auth',

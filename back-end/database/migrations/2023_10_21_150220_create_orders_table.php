@@ -13,6 +13,8 @@ return new class extends Migration
     {
         Schema::create('orders', function (Blueprint $table) {
             $table->id();
+            $table->string('name');
+            $table->text('description');
             $table->foreignId('user_id')->constrained();
             $table->enum('status',['completed','inprogress','cancelled'])->default('inprogress');
             $table->double('amount')->default(0);
