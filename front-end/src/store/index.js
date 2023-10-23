@@ -1,6 +1,7 @@
 import { createStore } from 'vuex';
 import category from './modules/category';
 import product from './modules/product';
+import order from './modules/order'
 import auth from './modules/auth'
 
 const store = createStore({
@@ -12,6 +13,7 @@ const store = createStore({
     modules: {
         category,
         product,
+        order,
         auth
     },
     actions:{

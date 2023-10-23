@@ -27,9 +27,7 @@ class StoreOrderItemRequest extends FormRequest
             'description'=>'required',
             'discountType'=>'nullable',
             'amount'=>'nullable',
-            'user_id' => 'required|exists:users,id',
             'products' => 'required|array',
-            'quantity' => 'required',
 
         ];
     }

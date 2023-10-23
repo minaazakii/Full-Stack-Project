@@ -9,7 +9,7 @@ class Order extends Model
 {
     use HasFactory;
 
-    protected $guraded=[];
+    protected $guarded=[];
 
     public function user()
     {

@@ -1,11 +1,13 @@
 <?php
 
-use App\Http\Controllers\Api\FrontEnd\Auth\LoginController;
-use App\Http\Controllers\Api\FrontEnd\Auth\RegisterController;
-use App\Http\Controllers\Api\FrontEnd\Category\CategoryController;
-use App\Http\Controllers\Api\FrontEnd\Product\ProductController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\Api\FrontEnd\Auth\LoginController;
+use App\Http\Controllers\Api\FrontEnd\Order\OrderController;
+use App\Http\Controllers\Api\FrontEnd\Auth\RegisterController;
+use App\Http\Controllers\Api\frontend\Order\OrderItemController;
+use App\Http\Controllers\Api\FrontEnd\Product\ProductController;
+use App\Http\Controllers\Api\FrontEnd\Category\CategoryController;
 
 /*
 |--------------------------------------------------------------------------
@@ -29,4 +31,8 @@ Route::group(['middleware' => 'checkToken'], function () {
     //Products
     Route::post('/products/multi/delete', [ProductController::class, 'destroyMulti']);
     Route::apiResource('products', ProductController::class);
+
+    //Order
+    Route::get('/orders', [OrderController::class, 'index']);
+    Route::post('/orders', [OrderItemController::class, 'store']);
 });
