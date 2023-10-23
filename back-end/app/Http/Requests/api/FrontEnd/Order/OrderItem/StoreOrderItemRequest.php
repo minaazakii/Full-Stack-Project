@@ -28,6 +28,7 @@ class StoreOrderItemRequest extends FormRequest
             'discountType'=>'nullable',
             'amount'=>'nullable',
             'products' => 'required|array',
+            'products.*.product.name'=>'required'
 
         ];
     }

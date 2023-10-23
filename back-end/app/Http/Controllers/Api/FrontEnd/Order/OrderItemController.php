@@ -17,7 +17,7 @@ class OrderItemController extends Controller
         {
             $order->products()->attach($rec['product']['id'],['quantity'=>$rec['quantity']]);
         }
-        return response()->json(['message'=>'Order Created Successfully',201]);
+        return response()->json(['message'=>'Order Created Successfully'],201);
 
     }
 }
