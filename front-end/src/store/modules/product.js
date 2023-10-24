@@ -12,6 +12,7 @@ export default {
             console.log(response.data.products);
         },
         async createProduct({ commit }, product) {
+            console.log(product)
             let response = await axios.post(baseUrl + '/api/products', product);
             return response;
         },

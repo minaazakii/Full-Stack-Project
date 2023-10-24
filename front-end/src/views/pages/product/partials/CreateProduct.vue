@@ -29,7 +29,7 @@ const product = ref({});
 const saveProduct = async () => {
     submitted.value = true;
     console.log(product.value);
-    if (product.status && product.value.name && product.value.name.trim() && product.value.description && product.value.price && product.value.category_id) {
+    if (product.value.status && product.value.name && product.value.name.trim() && product.value.description && product.value.price && product.value.category_id) {
         try {
             product.value.status = product.value.status ? product.value.status.value : 3;
             store.dispatch('startLoading');
