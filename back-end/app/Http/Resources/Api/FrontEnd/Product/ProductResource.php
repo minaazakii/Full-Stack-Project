@@ -24,7 +24,8 @@ class ProductResource extends JsonResource
             'ratings'=>$this->ratings,
             'price'=>$this->price,
             'quantity'=>$this->quantity,
-            'created_at'=>$this->created_at->format('l F j, Y')
+            'created_at'=>$this->created_at->format('l F j, Y'),
+            'pivot'=>$this->pivot?? null
         ];
     }
 }

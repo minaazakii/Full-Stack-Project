@@ -40,7 +40,7 @@ const hideCreateModal = () => {
 // Edit Modal
 const toggleEditModal = ref(false);
 const openEditModal = (editOrder) => {
-    category.value = { ...editOrder };
+    order.value = { ...editOrder };
     toggleEditModal.value = true;
 };
 const hideEditModal = () => {
@@ -195,7 +195,7 @@ const initFilters = () => {
                 <CreateOrderModal @hideCreateModal="hideCreateModal" :toggleCreateModal="toggleCreateModal">
                 </CreateOrderModal>
 
-                <EditOrderModal @hideEditModal="hideEditModal" :toggleEditModal="toggleEditModal" :order="order">
+                <EditOrderModal v-if="toggleEditModal" @hideEditModal="hideEditModal" :toggleEditModal="toggleEditModal" :order="order">
                 </EditOrderModal>
 
                 <!-- Delete Single Category -->

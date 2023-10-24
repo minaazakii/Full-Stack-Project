@@ -8,7 +8,6 @@ const emit = defineEmits();
 const store = useStore();
 const toast = useToast();
 
-let selectedProducts = ref([]);
 const products = computed(() => store.getters['product/products'])
 
 let dropDowns = ref([{ product: null, quantity: 0 }]);
@@ -19,7 +18,6 @@ const removeProduct = (index) => {
     dropDowns.value.splice(index, 1)
 
 }
-
 
 const discountTypes = ref([{ type: 'Fixed' }, { type: 'Percentage' }])
 const hideDialog = () => {

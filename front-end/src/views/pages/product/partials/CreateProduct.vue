@@ -39,7 +39,7 @@ const saveProduct = async () => {
             await store.dispatch('product/getProducts');
             hideDialog();
             product.value = {};
-            submitted = false;
+            submitted.value = false;
         } catch (e) {
             console.log(e);
             store.dispatch('stopLoading');

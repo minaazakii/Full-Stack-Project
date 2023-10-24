@@ -9,7 +9,6 @@ export default {
         async getProducts({ commit }) {
             let response = await axios.get(baseUrl + '/api/products');
             commit('setProducts', response.data.products);
-            console.log(response.data.products);
         },
         async createProduct({ commit }, product) {
             console.log(product)
