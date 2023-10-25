@@ -183,9 +183,9 @@ const initFilters = () => {
 
                     <Column headerStyle="min-width:10rem;">
                         <template #body="slotProps">
-                            <Button icon="pi pi-pencil" class="p-button-rounded p-button-success mr-2"
+                            <Button icon="pi pi-pencil" class="p-button-rounded p-button-warning mr-2"
                                 @click="openEditModal(slotProps.data)" />
-                            <Button icon="pi pi-trash" class="p-button-rounded p-button-warning mt-2"
+                            <Button icon="pi pi-trash" class="p-button-rounded p-button-danger mt-2"
                                 @click="confirmDeleteOrder(slotProps.data)" />
                         </template>
                     </Column>
@@ -199,7 +199,7 @@ const initFilters = () => {
                 </EditOrderModal>
 
                 <!-- Delete Single Category -->
-                <Dialog v-model:visible="deleteCategoryDialog" :style="{ width: '450px' }" header="Confirm" :modal="true">
+                <Dialog v-model:visible="deleteOrderDialog" :style="{ width: '450px' }" header="Confirm" :modal="true">
                     <div class="flex align-items-center justify-content-center">
                         <i class="pi pi-exclamation-triangle mr-3" style="font-size: 2rem" />
                         <span v-if="order">Are you sure you want to delete <b>{{ order.name }}</b>?</span>

@@ -11,7 +11,12 @@ class OrderController extends Controller
     public function index()
     {
         $orders = Order::with('products')->where('user_id', auth('sanctum')->id())->get();
-
         return response()->json(['orders' => OrderResource::collection($orders)]);
+    }
+
+    public function destroy($id)
+    {
+        Order::findOrFail($id)->delete();
+        return response()->json(['message' => 'Order Deleted Successfully']);
     }
 }

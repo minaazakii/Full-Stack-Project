@@ -1,5 +1,5 @@
 <script setup>
-import { toRef, ref, onMounted,computed } from 'vue';
+import { toRef, ref, onMounted, computed } from 'vue';
 import { useStore } from 'vuex';
 import { useToast } from 'primevue/usetoast';
 
@@ -14,50 +14,42 @@ const hide = () => {
     hideDialog();
 };
 
-let products = computed(() => store.getters['product/products'])
-let dropDowns = ref([{ product: null, quantity: 0 }]);
+let products = computed(() => store.getters['product/products']);
 const addProduct = () => {
-    dropDowns.value.push({ product: null, quantity: 0 });
-}
+    console.log(editOrder.value.products);
+    editOrder.value.products.push({ pivot: { quantity: 0 } });
+};
 const removeProduct = (index) => {
-    dropDowns.value.splice(index, 1)
-
-}
-const discountTypes = ref([{ type: 'fixed' }, { type: 'percentage' }])
+    editOrder.value.products.splice(index, 1);
+    console.log(editOrder.value.products);
+};
+const discountTypes = ref([{ type: 'fixed' }, { type: 'percentage' }]);
 
 const submitted = ref(false);
 let editOrder = toRef(props, 'order');
 
 const updateOrder = async () => {
     try {
+        editOrder.value.discountType = (editOrder.value.discountType?.type) ? editOrder.value.discountType.type : null 
         let response = await store.dispatch('order/updateOrder', editOrder.value);
         toast.add({ severity: 'success', detail: 'Success Message', summary: 'Order Updated', life: 3000 });
-        await store.dispatch('order/getCategories');
+        await store.dispatch('order/getOrders')
         hideDialog();
     } catch (e) {
+        console.log(e)
         toast.add({ severity: 'error', detail: 'Error Message', summary: 'Error ocurred While Updating', life: 3000 });
     }
 };
 
 onMounted(async () => {
     await store.dispatch('product/getProducts');
-    console.log(products.value)
-    if(editOrder.value)
-    {
-        console.log(editOrder.value.products)
+    console.log(products.value);
+    if (editOrder.value) {
+        console.log(editOrder.value.products);
     }
-   
-    editOrder.value.discountType = {type:editOrder.value.discountType};
-    products.value.forEach(product =>{
-        editOrder.value.products.forEach(editProduct=>{
-            if(product.id == editProduct.id)
-            {
-                product.pivot =editProduct.pivot
-            }
-        })
-    })
-    console.log(products.value)
-})
+
+    editOrder.value.discountType = { type: editOrder.value.discountType };
+});
 </script>
 
 <template>
@@ -98,7 +90,7 @@ onMounted(async () => {
             <div class="field col">
                 <label for="name">Product</label>
                 <div>
-                    <Dropdown :options="products" v-model="dropDown.product" optionLabel="name" placeholder="Select Discount Type" class="w-full" :class="{ 'p-invalid': submitted && !dropDown.product }" />
+                    <Dropdown :options="products" v-model="dropDown.id" optionLabel="name" optionValue="id" placeholder="Select Discount Type" class="w-full" :class="{ 'p-invalid': submitted && !dropDown.product }" />
                 </div>
                 <small class="p-error" v-if="submitted && !dropDown.product">Product is required.</small>
             </div>
@@ -109,12 +101,12 @@ onMounted(async () => {
             </div>
 
             <div class="field col flex align-items-end justify-content-end">
-                <Button v-if="dropDowns.length > 1" @click="removeProduct(index)" icon="pi pi-times"></Button>
+                <Button v-if="editOrder.products.length > 1" @click="removeProduct(index)" icon="pi pi-times"></Button>
             </div>
         </div>
         <template #footer>
             <Button label="Cancel" icon="pi pi-times" class="p-button-text" @click="hideDialog" />
-            <Button label="Save" icon="pi pi-check" class="p-button-text" @click="saveOrder" />
+            <Button label="Save" icon="pi pi-check" class="p-button-text" @click="updateOrder" />
         </template>
     </Dialog>
 </template>

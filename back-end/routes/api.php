@@ -34,5 +34,7 @@ Route::group(['middleware' => 'checkToken'], function () {
 
     //Order
     Route::get('/orders', [OrderController::class, 'index']);
+    Route::delete('/orders/{id}', [OrderController::class, 'destroy']);
     Route::post('/orders', [OrderItemController::class, 'store']);
+    Route::put('/orders/{id}', [OrderItemController::class, 'update']);
 });
