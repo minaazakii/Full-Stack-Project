@@ -26,7 +26,7 @@ class StoreProductRequest extends FormRequest
             'description'=>'required',
             'status'=>'required|in:1,2,3',
             'price'=>'required|numeric',
-            'quantity'=>'nullable',
+            'stock'=>'nullable',
             'ratings'=>'nullable'
         ];
     }

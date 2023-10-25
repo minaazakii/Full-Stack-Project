@@ -99,8 +99,8 @@ onMounted(async () => {
                 <small class="p-invalid" v-if="submitted && !editProduct.price">Price is required.</small>
             </div>
             <div class="field col">
-                <label for="quantity">Quantity</label>
-                <InputNumber id="quantity" v-model="editProduct.quantity" integeronly />
+                <label for="quantity">Stock</label>
+                <InputNumber id="quantity" v-model="editProduct.stock" integeronly />
             </div>
         </div>
 

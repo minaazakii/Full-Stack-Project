@@ -19,7 +19,7 @@ return new class extends Migration
             $table->enum('status',[1,2,3])->default(3);
             $table->enum('ratings',[0,1,2,3,4,5])->default(0);
             $table->double('price');
-            $table->unsignedInteger('quantity')->default(0);
+            $table->unsignedInteger('stock')->default(0);
             $table->timestamps();
         });
     }

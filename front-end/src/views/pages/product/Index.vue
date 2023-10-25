@@ -149,7 +149,7 @@ const initFilters = () => {
                     <Column field="code" header="Code" :sortable="true" headerStyle="width:14%; min-width:10rem;">
                         <template #body="slotProps">
                             <span class="p-column-title">Code</span>
-                            {{ slotProps.data.code }}
+                            {{ slotProps.data.id }}
                         </template>
                     </Column>
                     <Column field="name" header="Name" :sortable="true" headerStyle="width:14%; min-width:10rem;">
@@ -185,7 +185,15 @@ const initFilters = () => {
                     <Column field="inventoryStatus" header="Status" :sortable="true" headerStyle="width:14%; min-width:10rem;">
                         <template #body="slotProps">
                             <span class="p-column-title">Status</span>
-                            <span :class="'product-badge status-' + (slotProps.data.inventoryStatus ? slotProps.data.inventoryStatus.toLowerCase() : '')">{{ slotProps.data.inventoryStatus }}</span>
+                            <Tag v-if="slotProps.data.status == 1" value="In Stock" severity="success" />
+                            <Tag v-if="slotProps.data.status == 2" value="Low In Stock" severity="warning" />
+                            <Tag v-if="slotProps.data.status == 3" value="Out Of Stock" severity="danger" />
+                        </template>
+                    </Column>
+                    <Column field="stock" header="Stock" :sortable="true" headerStyle="width:14%; min-width:8rem;">
+                        <template #body="slotProps">
+                            <span class="p-column-title">Stock</span>
+                            {{ slotProps.data.stock }}
                         </template>
                     </Column>
                     <Column headerStyle="min-width:10rem;">

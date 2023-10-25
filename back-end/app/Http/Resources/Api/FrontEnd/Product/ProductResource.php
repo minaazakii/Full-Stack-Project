@@ -23,7 +23,7 @@ class ProductResource extends JsonResource
             'description'=>$this->description,
             'ratings'=>$this->ratings,
             'price'=>$this->price,
-            'quantity'=>$this->quantity,
+            'stock'=>$this->stock,
             'created_at'=>$this->created_at->format('l F j, Y'),
             'pivot'=>$this->pivot?? null
         ];
