@@ -145,6 +145,7 @@ const initFilters = () => {
                         </div>
                     </template>
 
+                    <template #empty> No Products found. </template>
                     <Column selectionMode="multiple" headerStyle="width: 3rem"></Column>
                     <Column field="code" header="Code" :sortable="true" headerStyle="width:14%; min-width:10rem;">
                         <template #body="slotProps">
