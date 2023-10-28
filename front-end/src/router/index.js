@@ -40,6 +40,16 @@ const router = createRouter({
                     component: () => import('@/views/Dashboard.vue')
                 },
                 {
+                    path: 'users',
+                    children: [
+                        {
+                            path: '',
+                            name: 'users',
+                            component: () => import('@/views/pages/user/Index.vue')
+                        }
+                    ]
+                },
+                {
                     path: 'categories',
                     children: [
                         {

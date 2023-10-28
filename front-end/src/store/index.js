@@ -3,6 +3,7 @@ import category from './modules/category';
 import product from './modules/product';
 import order from './modules/order'
 import auth from './modules/auth'
+import user from './modules/user'
 
 const store = createStore({
     state() {
@@ -14,7 +15,8 @@ const store = createStore({
         category,
         product,
         order,
-        auth
+        auth,
+        user
     },
     actions:{
         startLoading({commit}){

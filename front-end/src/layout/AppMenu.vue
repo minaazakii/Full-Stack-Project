@@ -55,6 +55,11 @@ const model = ref([
             //     to: '/landing'
             // },
             {
+                label: 'Users',
+                icon: 'pi pi-users',
+                to: router.resolve({ name: 'users' })
+            },
+            {
                 label: 'Categories',
                 icon: 'pi pi-fw pi-sitemap',
                 to: router.resolve({ name: 'categories' })
