@@ -14,7 +14,7 @@ class UserController extends Controller
     public function index()
     {
         return response()->json([
-            'users' => UserResource::collection(User::with(['permissions', 'roles'])->get()),
+            'users' => UserResource::collection(User::with(['permissions', 'roles'])->where('id', '!=', auth('sanctum')->id())->get()),
         ]);
     }
 
