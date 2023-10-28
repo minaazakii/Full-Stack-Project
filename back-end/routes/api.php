@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Api\FrontEnd\Admin\User\UserController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Api\FrontEnd\Auth\LoginController;
@@ -24,6 +25,9 @@ Route::post('/auth/register', [RegisterController::class, 'store']);
 Route::post('/auth/login', [LoginController::class, 'login']);
 
 Route::group(['middleware' => 'checkToken'], function () {
+    //User
+    Route::apiResource('users', UserController::class);
+
     //Categories
     Route::post('/categories/multi/delete', [CategoryController::class, 'destroyMulti']);
     Route::apiResource('categories', CategoryController::class);
