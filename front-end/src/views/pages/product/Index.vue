@@ -44,12 +44,6 @@ const selectedProducts = ref(null);
 const dt = ref(null);
 const filters = ref({});
 
-onBeforeMount(() => {
-    initFilters();
-});
-onMounted(async () => {
-    await store.dispatch('product/getProducts');
-});
 const formatCurrency = (value) => {
     return value.toLocaleString('en-US', { style: 'currency', currency: 'USD' });
 };
@@ -101,6 +95,15 @@ const initFilters = () => {
         global: { value: null, matchMode: FilterMatchMode.CONTAINS }
     };
 };
+
+onBeforeMount(() => {
+    initFilters();
+});
+onMounted(async () => {
+    store.dispatch('startLoading')
+    await store.dispatch('product/getProducts');
+    store.dispatch('stopLoading')
+});
 </script>
 
 <template>
@@ -112,29 +115,24 @@ const initFilters = () => {
                     <template v-slot:start>
                         <div class="my-2">
                             <Button label="New" icon="pi pi-plus" class="p-button-success mr-2" @click="openCreateModal" />
-                            <Button label="Delete" icon="pi pi-trash" class="p-button-danger" @click="confirmDeleteSelected" :disabled="!selectedProducts || !selectedProducts.length" />
+                            <Button label="Delete" icon="pi pi-trash" class="p-button-danger" @click="confirmDeleteSelected"
+                                :disabled="!selectedProducts || !selectedProducts.length" />
                         </div>
                     </template>
 
                     <template v-slot:end>
-                        <FileUpload mode="basic" accept="image/*" :maxFileSize="1000000" label="Import" chooseLabel="Import" class="mr-2 inline-block" />
+                        <FileUpload mode="basic" accept="image/*" :maxFileSize="1000000" label="Import" chooseLabel="Import"
+                            class="mr-2 inline-block" />
                         <Button label="Export" icon="pi pi-upload" class="p-button-help" @click="exportCSV($event)" />
                     </template>
                 </Toolbar>
 
-                <DataTable
-                    ref="dt"
-                    :value="products"
-                    v-model:selection="selectedProducts"
-                    dataKey="id"
-                    :paginator="true"
-                    :rows="10"
-                    :filters="filters"
+                <DataTable :loading="loading" ref="dt" :value="products" v-model:selection="selectedProducts" dataKey="id"
+                    :paginator="true" :rows="10" :filters="filters"
                     paginatorTemplate="FirstPageLink PrevPageLink PageLinks NextPageLink LastPageLink CurrentPageReport RowsPerPageDropdown"
                     :rowsPerPageOptions="[5, 10, 25]"
                     currentPageReportTemplate="Showing {first} to {last} of {totalRecords} products"
-                    responsiveLayout="scroll"
-                >
+                    responsiveLayout="scroll">
                     <template #header>
                         <div class="flex flex-column md:flex-row md:justify-content-between md:align-items-center">
                             <h5 class="m-0">Manage Products</h5>
@@ -162,7 +160,8 @@ const initFilters = () => {
                     <Column header="Image" headerStyle="width:14%; min-width:10rem;">
                         <template #body="slotProps">
                             <span class="p-column-title">Image</span>
-                            <img :src="'demo/images/product/' + slotProps.data.image" :alt="slotProps.data.image" class="shadow-2" width="100" />
+                            <img :src="'demo/images/product/' + slotProps.data.image" :alt="slotProps.data.image"
+                                class="shadow-2" width="100" />
                         </template>
                     </Column>
                     <Column field="price" header="Price" :sortable="true" headerStyle="width:14%; min-width:8rem;">
@@ -183,7 +182,8 @@ const initFilters = () => {
                             <Rating :modelValue="slotProps.data.ratings" :readonly="true" :cancel="false" />
                         </template>
                     </Column>
-                    <Column field="inventoryStatus" header="Status" :sortable="true" headerStyle="width:14%; min-width:10rem;">
+                    <Column field="inventoryStatus" header="Status" :sortable="true"
+                        headerStyle="width:14%; min-width:10rem;">
                         <template #body="slotProps">
                             <span class="p-column-title">Status</span>
                             <Tag v-if="slotProps.data.status == 1" value="In Stock" severity="success" />
@@ -199,27 +199,29 @@ const initFilters = () => {
                     </Column>
                     <Column headerStyle="min-width:10rem;">
                         <template #body="slotProps">
-                            <Button icon="pi pi-pencil" class="p-button-rounded p-button-success mr-2" @click="openEditModal(slotProps.data)" />
-                            <Button icon="pi pi-trash" class="p-button-rounded p-button-warning mt-2" @click="confirmDeleteProduct(slotProps.data)" />
+                            <Button icon="pi pi-pencil" class="p-button-rounded p-button-success mr-2"
+                                @click="openEditModal(slotProps.data)" />
+                            <Button icon="pi pi-trash" class="p-button-rounded p-button-warning mt-2"
+                                @click="confirmDeleteProduct(slotProps.data)" />
                         </template>
                     </Column>
                 </DataTable>
 
-                <CreateProductModal @hideCreateModal="hideCreateModal" :toggleCreateModal="toggleCreateModal"></CreateProductModal>
+                <CreateProductModal @hideCreateModal="hideCreateModal" :toggleCreateModal="toggleCreateModal">
+                </CreateProductModal>
 
-                <EditProductModal @hideEditModal="hideEditModal" :toggleEditModal="toggleEditModal" :product="product"></EditProductModal>
+                <EditProductModal @hideEditModal="hideEditModal" :toggleEditModal="toggleEditModal" :product="product">
+                </EditProductModal>
 
                 <Dialog v-model:visible="deleteProductDialog" :style="{ width: '450px' }" header="Confirm" :modal="true">
                     <div class="flex align-items-center justify-content-center">
                         <i class="pi pi-exclamation-triangle mr-3" style="font-size: 2rem" />
-                        <span v-if="product"
-                            >Are you sure you want to delete <b>{{ product.name }}</b
-                            >?</span
-                        >
+                        <span v-if="product">Are you sure you want to delete <b>{{ product.name }}</b>?</span>
                     </div>
                     <template #footer>
                         <Button label="No" icon="pi pi-times" class="p-button-text" @click="deleteProductDialog = false" />
-                        <Button label="Yes" icon="pi pi-check" :loading="loading" class="p-button-text" @click="deleteProduct" />
+                        <Button label="Yes" icon="pi pi-check" :loading="loading" class="p-button-text"
+                            @click="deleteProduct" />
                     </template>
                 </Dialog>
 
@@ -230,7 +232,8 @@ const initFilters = () => {
                     </div>
                     <template #footer>
                         <Button label="No" icon="pi pi-times" class="p-button-text" @click="deleteProductsDialog = false" />
-                        <Button :loading="loading" label="Yes" icon="pi pi-check" class="p-button-text" @click="deleteSelectedProducts" />
+                        <Button :loading="loading" label="Yes" icon="pi pi-check" class="p-button-text"
+                            @click="deleteSelectedProducts" />
                     </template>
                 </Dialog>
             </div>

@@ -9,6 +9,7 @@ import { computed } from 'vue';
 
 const toast = useToast();
 const store = useStore();
+const loading = computed(() => store.getters['loading'])
 
 const orders = computed(() => store.getters['order/orders']);
 
@@ -59,7 +60,9 @@ onBeforeMount(() => {
     initFilters();
 });
 onMounted(async () => {
+    store.dispatch('startLoading')
     await store.dispatch('order/getOrders');
+    store.dispatch('stopLoading')
 });
 const formatCurrency = (value) => {
     return value.toLocaleString('en-US', { style: 'currency', currency: 'USD' });
@@ -129,8 +132,8 @@ const initFilters = () => {
                     </template>
                 </Toolbar>
 
-                <DataTable ref="dt" :value="orders" v-model:selection="selectedOrders" dataKey="id" :paginator="true"
-                    :rows="10" :filters="filters"
+                <DataTable :loading="loading" ref="dt" :value="orders" v-model:selection="selectedOrders" dataKey="id"
+                    :paginator="true" :rows="10" :filters="filters"
                     paginatorTemplate="FirstPageLink PrevPageLink PageLinks NextPageLink LastPageLink CurrentPageReport RowsPerPageDropdown"
                     :rowsPerPageOptions="[5, 10, 25]"
                     currentPageReportTemplate="Showing {first} to {last} of {totalRecords} Orders"
@@ -163,21 +166,23 @@ const initFilters = () => {
                     <Column field="status" header="Status" :sortable="true" headerStyle="width:40%; min-width:10rem;">
                         <template #body="slotProps">
                             <span class="p-column-title">Status</span>
-                            <Tag :value="slotProps.data.status" :severity="getSeverity(slotProps.data)"/>
+                            <Tag :value="slotProps.data.status" :severity="getSeverity(slotProps.data)" />
                         </template>
                     </Column>
 
-                    <Column field="amount" header="Discount Amount" :sortable="true" headerStyle="width:40%; min-width:10rem;">
+                    <Column field="amount" header="Discount Amount" :sortable="true"
+                        headerStyle="width:40%; min-width:10rem;">
                         <template #body="slotProps">
                             <span class="p-column-title">Discount Amount</span>
-                           {{ slotProps.data.amount }}
+                            {{ slotProps.data.amount }}
                         </template>
                     </Column>
 
-                    <Column field="discountType" header="Discount Type" :sortable="true" headerStyle="width:40%; min-width:10rem;">
+                    <Column field="discountType" header="Discount Type" :sortable="true"
+                        headerStyle="width:40%; min-width:10rem;">
                         <template #body="slotProps">
                             <span class="p-column-title">Discount Type</span>
-                           {{ slotProps.data.discountType }}
+                            {{ slotProps.data.discountType }}
                         </template>
                     </Column>
 
@@ -195,7 +200,8 @@ const initFilters = () => {
                 <CreateOrderModal @hideCreateModal="hideCreateModal" :toggleCreateModal="toggleCreateModal">
                 </CreateOrderModal>
 
-                <EditOrderModal v-if="toggleEditModal" @hideEditModal="hideEditModal" :toggleEditModal="toggleEditModal" :order="order">
+                <EditOrderModal v-if="toggleEditModal" @hideEditModal="hideEditModal" :toggleEditModal="toggleEditModal"
+                    :order="order">
                 </EditOrderModal>
 
                 <!-- Delete Single Category -->
