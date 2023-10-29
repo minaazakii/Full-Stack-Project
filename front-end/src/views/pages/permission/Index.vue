@@ -103,7 +103,7 @@ const initFilters = () => {
                 <Toolbar class="mb-4">
                     <template v-slot:start>
                         <div class="my-2">
-                            <Button label="New" icon="pi pi-plus" class="p-button-success mr-2" @click="openCreateModal" />
+                            <Button label="Assign Permission To User" icon="pi pi-user-plus" class="p-button-success mr-2" @click="openCreateModal" />
                             <Button label="Delete" icon="pi pi-trash" class="p-button-danger" @click="confirmDeleteSelected"
                                 :disabled="!selectedPermissions || !selectedPermissions.length" />
                         </div>
