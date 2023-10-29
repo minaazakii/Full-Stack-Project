@@ -56,8 +56,24 @@ const model = ref([
             // },
             {
                 label: 'Users',
-                icon: 'pi pi-users',
-                to: router.resolve({ name: 'users' })
+                icon: 'pi pi-user',
+                items:[
+                    {
+                        label:'Users List',
+                        icon: 'pi pi-users',
+                        to: router.resolve({ name: 'users' })
+                    },
+                    {
+                        label:'Permissions',
+                        icon: 'pi pi-id-card',
+                        to: router.resolve({ name: 'permissions' })
+                    },
+                    {
+                        label:'Roles',
+                        icon: 'pi pi-shield',
+                        to: router.resolve({ name: 'roles' })
+                    }
+                ]
             },
             {
                 label: 'Categories',

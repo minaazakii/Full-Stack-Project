@@ -9,6 +9,8 @@ use App\Http\Controllers\Api\FrontEnd\Auth\RegisterController;
 use App\Http\Controllers\Api\frontend\Order\OrderItemController;
 use App\Http\Controllers\Api\FrontEnd\Product\ProductController;
 use App\Http\Controllers\Api\FrontEnd\Category\CategoryController;
+use App\Http\Controllers\Api\FrontEnd\Permission\PermissionController;
+use App\Http\Controllers\Api\FrontEnd\Role\RoleController;
 
 /*
 |--------------------------------------------------------------------------
@@ -25,6 +27,12 @@ Route::post('/auth/register', [RegisterController::class, 'store']);
 Route::post('/auth/login', [LoginController::class, 'login']);
 
 Route::group(['middleware' => 'checkToken'], function () {
+    //Roles
+    Route::get('/roles', [RoleController::class, 'index']);
+    //Permissions
+    Route::put('/permissions/{id}', [PermissionController::class, 'update']);
+    Route::get('/permissions', [PermissionController::class, 'index']);
+
     //User
     Route::apiResource('users', UserController::class);
 
