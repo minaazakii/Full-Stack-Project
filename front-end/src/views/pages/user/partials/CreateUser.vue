@@ -19,13 +19,14 @@ const submitted = ref(false);
 const user = ref({});
 const saveUser = async () => {
     submitted.value = true;
-    if (user.value.name && user.value.name.trim()) {
+    if (user.value.name.trim() && user.value.email.trim() && user.value.password) {
         try {
-            let response = await store.dispatch('user/createUser', user);
+            let response = await store.dispatch('user/createUser', user.value);
             toast.add({ severity: 'success', summary: 'Success Message', detail: 'User Has Been Added', life: 3000 });
-            await store.dispatch('user/getCategories');
+            await store.dispatch('user/getUsers');
             hideDialog();
             user.value = {};
+            submitted.value = true;
         } catch (e) {
             toast.add({ severity: 'error', summary: 'Error Message', detail: 'Error Occur While Adding User', life: 3000 });
         }
@@ -40,18 +41,18 @@ const saveUser = async () => {
         <div class="field">
             <label for="name">Name</label>
             <InputText id="name" v-model.trim="user.name" required="true" :class="{ 'p-invalid': submitted && !user.name }" />
-            <small class="p-invalid" v-if="submitted && !user.name">Name is required.</small>
+            <small class="p-error" v-if="submitted && !user.name">Name is required.</small>
         </div>
 
         <div class="field">
             <label for="name">Email</label>
             <InputText id="name" v-model.trim="user.email" required="true" :class="{ 'p-invalid': submitted && !user.email }" />
-            <small class="p-invalid" v-if="submitted && !user.email">Email is required.</small>
+            <small class="p-error" v-if="submitted && !user.email">Email is required.</small>
         </div>
         <div class="field">
             <label for="name">Password</label>
             <InputText id="name" v-model.trim="user.password" required="true" :class="{ 'p-invalid': submitted && !user.password }" />
-            <small class="p-invalid" v-if="submitted && !user.password">Password is required.</small>
+            <small class="p-error" v-if="submitted && !user.password">Password is required.</small>
         </div>
 
         <template #footer>
