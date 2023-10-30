@@ -30,6 +30,7 @@ Route::group(['middleware' => 'checkToken'], function () {
     //Roles
     Route::get('/roles', [RoleController::class, 'index']);
     //Permissions
+    Route::post('/permissions/assign/user/{userId}', [PermissionController::class, 'assignPermission']);
     Route::put('/permissions/{id}', [PermissionController::class, 'update']);
     Route::get('/permissions', [PermissionController::class, 'index']);
 

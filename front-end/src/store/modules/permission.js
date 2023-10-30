@@ -15,7 +15,14 @@ export default {
         {
             let response = await axios.put(baseUrl+'/api/permissions/'+permission.id,permission)
             return response;
+        },
+
+        async assignPermissions({commit},user)
+        {
+            let response = await axios.post(baseUrl+'/api/permissions/assign/user/'+user.id,user)
+            return response;
         }
+
     },
     mutations: {
         setPermission(state, data) {
