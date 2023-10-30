@@ -3,7 +3,7 @@ let baseUrl = 'http://localhost:8000';
 export default {
     namespaced: true,
     state() {
-        user: null || JSON.parse(localStorage.getItem('user'));
+        user: JSON.parse(localStorage.getItem('user')) || null ;
     },
     actions: {
         async register({ commit }, user) {

@@ -5,6 +5,7 @@ import order from './modules/order';
 import auth from './modules/auth';
 import user from './modules/user';
 import permission from './modules/permission';
+import role from './modules/role';
 
 const store = createStore({
     state() {
@@ -18,7 +19,8 @@ const store = createStore({
         order,
         auth,
         user,
-        permission
+        permission,
+        role
     },
     actions: {
         startLoading({ commit }) {

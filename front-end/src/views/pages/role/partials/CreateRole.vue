@@ -16,18 +16,18 @@ const hide = () => {
 };
 
 const submitted = ref(false);
-const category = ref({});
-const saveCategory = async () => {
+const role = ref({});
+const saveRole = async () => {
     submitted.value = true;
-    if (category.value.name && category.value.name.trim()) {
+    if (role.value.name && role.value.name.trim()) {
         try {
-            let response = await store.dispatch('category/createCategory', category);
-            toast.add({ severity: 'success', summary: 'Success Message', detail: 'Category Has Been Added', life: 3000 });
-            await store.dispatch('category/getCategories');
+            let response = await store.dispatch('role/createRole', role);
+            toast.add({ severity: 'success', summary: 'Success Message', detail: 'Role Has Been Added', life: 3000 });
+            await store.dispatch('role/getRoles');
             hideDialog();
-            category.value = {};
+            role.value = {};
         } catch (e) {
-            toast.add({ severity: 'error', summary: 'Error Message', detail: 'Error Occur While Adding Category', life: 3000 });
+            toast.add({ severity: 'error', summary: 'Error Message', detail: 'Error Occur While Adding Role', life: 3000 });
         }
     }
 };
@@ -39,13 +39,13 @@ const saveCategory = async () => {
         <!-- <img :src="'demo/images/product/' + product.image" :alt="product.image" v-if="product.image" width="150" class="mt-0 mx-auto mb-5 block shadow-2" /> -->
         <div class="field">
             <label for="name">Name</label>
-            <InputText id="name" v-model.trim="category.name" required="true" :class="{ 'p-invalid': submitted && !category.name }" />
-            <small class="p-invalid" v-if="submitted && !category.name">Name is required.</small>
+            <InputText id="name" v-model.trim="role.name" required="true" :class="{ 'p-invalid': submitted && !role.name }" />
+            <small class="p-invalid" v-if="submitted && !role.name">Name is required.</small>
         </div>
 
         <template #footer>
             <Button label="Cancel" icon="pi pi-times" class="p-button-text" @click="hideDialog" />
-            <Button label="Save" icon="pi pi-check" class="p-button-text" @click="saveCategory" />
+            <Button label="Save" icon="pi pi-check" class="p-button-text" @click="saveRole" />
         </template>
     </Dialog>
 </template>

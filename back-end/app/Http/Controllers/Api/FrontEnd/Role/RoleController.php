@@ -14,4 +14,5 @@ class RoleController extends Controller
             'roles'=>Role::all(),
         ]);
     }
+    
 }
